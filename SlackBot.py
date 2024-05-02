@@ -37,5 +37,19 @@ def handle_command():
 
     return jsonify({'response_type': 'ephemeral', 'text': 'Invalid command'})
 
+
+@app.route('/slack/events', methods=['POST'])
+def slack_events():
+    data = request.json  # This will contain the data sent by Slack
+    if 'challenge' in data:
+        # Respond to the challenge by returning the challenge value
+        return jsonify({'challenge': data['challenge']})
+    else:
+        # Handle other events here
+        return jsonify({'status': 'OK'})
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 if __name__ == '__main__':
     app.run(debug=True)
